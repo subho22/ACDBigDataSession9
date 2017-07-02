@@ -1,0 +1,10 @@
+A = LOAD 'petrol_data.txt' using PigStorage(',')  as (district: chararray, distributer: chararray, buy_rate: chararray, sell_rate: chararray, vol_in: int, vol_out: int, year: int);
+
+B= foreach A generate distributer,vol_out;
+
+--Order by amount of petrol out 
+C= order B by vol_out ;
+
+D= LIMIT C 1;
+
+LIMIT D;

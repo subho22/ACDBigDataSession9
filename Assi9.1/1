@@ -1,0 +1,16 @@
+--Loading the data in relation A
+
+A = LOAD 'petrol_data.txt' using PigStorage(',')  as (district: chararray, distributer: chararray, buy_rate: chararray, sell_rate: chararray, vol_in: int, vol_out: int, year: int);
+
+
+B = FOREACH A GENERATE distributer, vol_out;
+
+--group by distributer
+
+GRP_DIST = group B by distributer;
+
+--total amount of petrol sold by distributer
+V_BY_DIST = foreach GRP_DIST generate group, SUM(B.vol_out);
+
+
+dump V_BY_DIST;

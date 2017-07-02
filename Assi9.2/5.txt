@@ -1,0 +1,17 @@
+
+       
+--  f1:Name,f2:Col.Undertaken,f3:Dob,f4:Stream,f5:grade,f6:state,f7:city
+
+
+pi = load 'studentDS' using PigStorage(',')AS(f1:chararray,f2:chararray,f3:chararray,f4:chararray,f5:float,f6:chararray,f7:chararray);
+
+pa = foreach pi generate (float)f5,f1;
+
+--filter students who scored less than 5
+fil = filter pa by f5<5
+g = group fil all;
+
+--Count of students who scored less than 5
+c = foreach g generate COUNT(fil.f5);
+dump c;
+

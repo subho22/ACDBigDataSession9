@@ -1,0 +1,18 @@
+--  f1:Name,f2:Col.Undertaken,f3:Dob,f4:Stream,f5:grade,f6:state,f7:city
+
+
+pi = load 'studentDS' using PigStorage(',')AS(f1:chararray,f2:chararray,f3:chararray,f4:chararray,f5:float,f6:chararray,f7:chararray);
+
+A = foreach pi generate f2,f6;
+
+--filter by government colleges and state is alabama
+
+B = filter A by f2 matches 'goverenment' and f6 matches 'alabama';
+
+C =  group B all;
+
+D = foreach C generate COUNT(B.f2);
+
+dump D;
+
+

@@ -1,0 +1,11 @@
+--  f1:Name,f2:Col.Undertaken,f3:Dob,f4:Stream,f5:grade,f6:state,f7:city
+
+pi = load 'studentDS' using PigStorage(',')AS(f1:chararray,f2:chararray,f3:chararray,f4:chararray,f5:float,f6:chararray,f7:chararray);
+
+A = foreach pi generate f1,f4,f6;
+
+--filter by BE degree and state is oregon
+B = filter A by f4 matches 'BE' and f6 matches 'oregon';
+
+dump B;
+
